@@ -7,6 +7,6 @@ const isAdmin = window.location.pathname.includes('/admin');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {isAdmin ? <Admin /> : <Guest />}
+    <Admin />
   </React.StrictMode>
 );
