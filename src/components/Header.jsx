@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Menu, 
-  X, 
   Bell, 
   User, 
   LogOut, 
   Settings,
-  ChevronDown 
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Ambil teks dari URL (misal: "/data-pasien" jadi "Data Pasien")
+  const currentPath = location.pathname.split('/').pop() || 'Dashboard';
+  const displayTitle = currentPath.replace(/-/g, ' ');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -20,76 +25,68 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+    <header className="bg-main-bg/80 backdrop-blur-md sticky top-0 z-20 font-sans">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Tombol menu untuk mobile - TIDAK untuk menggeser konten */}
-          <div className="flex items-center lg:hidden">
+          
+          <div className="flex items-center">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="text-gray-500 hover:text-gray-600 focus:outline-none"
+              className="p-2 -ml-2 mr-2 text-gray-500 lg:hidden hover:bg-gray-100 rounded-lg"
             >
-              {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu size={22} />
             </button>
+            
+            {/* Breadcrumbs Otomatis dari URL */}
+            <div className="flex items-center text-sm font-medium tracking-tight">
+              <span className="text-gray-400">Pages</span>
+              <ChevronRight size={14} className="mx-2 text-gray-300" />
+              <span className="text-txt-primary font-bold capitalize">
+                {displayTitle}
+              </span>
+            </div>
           </div>
 
-          {/* Title/Logo di header */}
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
-          </div>
-
-          {/* Right side - User menu and notifications */}
-          <div className="flex items-center space-x-4">
-            {/* Notifications */}
-            <button className="relative text-gray-400 hover:text-gray-600">
+          <div className="flex items-center space-x-3">
+            {/* Notifikasi */}
+            <button className="p-2 text-gray-400 hover:text-primary hover:bg-blue-50 rounded-full transition-colors relative">
               <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
             </button>
 
-            {/* User dropdown */}
+            {/* User Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-3 focus:outline-none"
+                className="flex items-center space-x-3 p-1 pr-2 hover:bg-white rounded-full transition-all border border-transparent hover:border-gray-100"
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                  <User size={16} className="text-white" />
+                <div className="w-8 h-8 bg-gradient-to-tr from-main-bg to-main-bg rounded-full flex items-center justify-center shadow-sm">
+                  <User size={16} className="text-primary" />
                 </div>
-                <span className="hidden md:block text-sm font-medium text-gray-700">drg. Rizky</span>
-                <ChevronDown size={16} className="hidden md:block text-gray-400" />
+                <div className="hidden md:block text-left">
+                    <p className="text-xs font-bold text-gray-800 leading-none">drg. Rizky</p>
+                    <p className="text-[10px] font-medium text-gray-500 mt-1">Administrator</p>
+                </div>
+                <ChevronDown size={14} className="hidden md:block text-gray-400" />
               </button>
 
               {isUserMenuOpen && (
                 <>
-                  <div 
-                    className="fixed inset-0 z-40"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  ></div>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                    <div className="py-1">
-                      <Link
-                        to="/profile"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <User size={16} className="mr-2" />
+                  <div className="fixed inset-0 z-40" onClick={() => setIsUserMenuOpen(false)}></div>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden py-1">
+                      <Link to="/profile" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 font-medium transition-colors">
+                        <User size={16} className="mr-3 text-gray-400" />
                         Profil Saya
                       </Link>
-                      <Link
-                        to="/settings"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Settings size={16} className="mr-2" />
+                      <Link to="/settings" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 font-medium transition-colors">
+                        <Settings size={16} className="mr-3 text-gray-400" />
                         Pengaturan
                       </Link>
-                      <hr className="my-1" />
-                      <button
-                        onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                      >
-                        <LogOut size={16} className="mr-2" />
+                      <hr className="my-1 border-gray-50" />
+                      <button onClick={handleLogout} className="flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 font-bold transition-colors">
+                        <LogOut size={16} className="mr-3" />
                         Keluar
                       </button>
-                    </div>
                   </div>
                 </>
               )}

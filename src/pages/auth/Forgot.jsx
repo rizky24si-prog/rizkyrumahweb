@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 const Forgot = () => {
   const [email, setEmail] = useState('');
@@ -10,8 +10,6 @@ const Forgot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulasi API call
     setTimeout(() => {
       setIsSubmitted(true);
       setIsLoading(false);
@@ -20,21 +18,20 @@ const Forgot = () => {
 
   if (isSubmitted) {
     return (
-      <div className="text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-          <CheckCircle size={32} className="text-green-600" />
+      <div className="text-center py-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6 border-4 border-white shadow-sm">
+          <CheckCircle size={32} className="text-green-500" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Cek Email Anda</h2>
-        <p className="text-gray-600 mb-6">
-          Kami telah mengirimkan link reset password ke <br />
-          <span className="font-medium text-gray-900">{email}</span>
+        <p className="text-gray-500 text-sm mb-8 leading-relaxed">
+          Instruksi reset password telah dikirim ke <br />
+          <span className="font-bold text-gray-800">{email}</span>
         </p>
         <Link
           to="/login"
-          className="inline-flex items-center text-blue-600 hover:text-blue-700"
+          className="btn-primary inline-flex items-center justify-center gap-2"
         >
-          <ArrowLeft size={16} className="mr-1" />
-          Kembali ke Login
+          <ArrowLeft size={16} /> Kembali ke Login
         </Link>
       </div>
     );
@@ -42,49 +39,31 @@ const Forgot = () => {
 
   return (
     <div>
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Lupa Password?</h2>
-        <p className="text-gray-600 mt-2">
-          Masukkan email Anda untuk mereset password
-        </p>
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Lupa Password</h2>
+        <p className="text-gray-500 mt-2 text-sm">Masukkan email untuk memulihkan akses</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-6 items-center">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Alamat Email
-          </label>
-          <div className="relative">
-            <Mail size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field pl-10"
-              placeholder="nama@email.com"
-              required
-            />
-          </div>
+          <label className="block text-sm font-bold text-gray-800 mb-2 ml-1">Alamat Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input-field"
+            placeholder="nama@email.com"
+            required
+          />
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full btn-primary flex items-center justify-center"
-        >
-          {isLoading ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-              Mengirim...
-            </>
-          ) : (
-            'Kirim Link Reset'
-          )}
+        <button type="submit" disabled={isLoading} className="btn-primary items-center justify-center font-semibold w-full">
+          {isLoading ? 'Mengirim...' : 'Kirim Link Reset'}
         </button>
 
         <div className="text-center">
-          <Link to="/login" className="text-sm text-blue-600 hover:text-blue-700">
-            Kembali ke Login
+          <Link to="/" className="text-xs text-gray-500 hover:text-blue-600 font-bold transition-colors">
+            Masuk di sini
           </Link>
         </div>
       </form>

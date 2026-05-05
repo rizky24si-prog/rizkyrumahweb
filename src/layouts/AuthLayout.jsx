@@ -1,25 +1,25 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Stethoscope } from 'lucide-react'; // Menggunakan ikon stetoskop sebagai pengganti
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-indigo-700">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-10">
-          <Link to="/">
-            <h1 className="text-4xl font-bold text-white mb-2">Dental Plus</h1>
-            <p className="text-blue-100">Aplikasi Rekam Medis Klinik Gigi Terintegrasi SATUSEHAT</p>
-          </Link>
-        </div>
-        
-        <div className="max-w-md mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <Outlet />
+    <div className="min-h-screen bg-main-bg flex items-center justify-center font-sans p-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 md:p-12 relative overflow-hidden">
+          
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center border-4 border-white shadow-sm">
+              <Stethoscope size={36} className="text-blue-600" />
+            </div>
           </div>
+
+          <Outlet />
+          
         </div>
-        
-        <div className="text-center mt-8 text-white text-sm">
-          © 2024 Dental Plus. All rights reserved.
+
+        <div className="text-center mt-8 text-txt-primary text-xs font-medium tracking-wide">
+          © 2026 DENTAL PLUS • TERINTEGRASI SATUSEHAT
         </div>
       </div>
     </div>

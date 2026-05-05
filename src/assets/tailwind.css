@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/poppins.refuler.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @theme {
+  --font-family: 'Poppins', sans-serif;
+  
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -32,24 +41,32 @@
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
   --color-white: #ffffff;
+  --color-primary: #0E45B7;
+  --color-secondary: #3FBDF1;
+  --color-third: #71DDB1;
+  --color-fourth: #FFAD47;
+  --color-txt-primary: #6E7191;
+  --color-main-bg: #F2F8FD;
+
 }
 
 @layer components {
   .card {
     background-color: var(--color-white);
-    border-radius: 0.75rem;
+    border-radius:  0.625rem;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    border: 1px solid var(--color-gray-100);
     transition-property: box-shadow;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
   .card:hover {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    border-radius:  0.625rem;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.05);
   }
   
   .btn-primary {
-    background-image: linear-gradient(to right, var(--color-blue-600), var(--color-indigo-600));
+
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-primary));
     color: var(--color-white);
     padding-left: 1rem;
     padding-right: 1rem;
@@ -63,41 +80,52 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   .btn-primary:hover {
-    background-image: linear-gradient(to right, var(--color-blue-700), var(--color-indigo-700));
+    background-image: linear-gradient(to right, var(--color-white), var(--color-white));
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem;
+    color: var(--color-primary);
+
   }
   
-  .input-field {
+.input-field {
     width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    border: 1px solid var(--color-gray-300);
-    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: #F4F5F7;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
     outline: none;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+    transition: all 0.2s;
+    font-size: 0.875rem;
   }
+
   .input-field:focus {
-    ring: 2px solid var(--color-blue-500);
-    border-color: transparent;
+    background-color: #FFFFFF;
+    border-color: var(--color-blue-300);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
   }
   
   .stat-card {
     background-color: var(--color-white);
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    border: 1px solid var(--color-gray-100);
     padding: 1.5rem;
+    border-radius:  0.625rem;
     transition-property: box-shadow;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
   .stat-card:hover {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.05);
+
   }
+
+  .main-card {
+    background-color: var(--color-primary);
+    border-radius:  0.625rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
 }
 
 /* Custom scrollbar */
