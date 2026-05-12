@@ -17,7 +17,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     { path: '/dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { path: '/appointments', name: 'Janji Temu', icon: Calendar },
     { path: '/patients', name: 'Data Pasien', icon: Users },
-    { path: '/doctors', name: 'Data Dokter', icon: Stethoscope },
+    { path: '/dokter', name: 'Data Dokter', icon: Stethoscope },
     { path: '/examinations', name: 'Pemeriksaan', icon: FileText },
     { path: '/inventory', name: 'Stok Barang', icon: Package },
     { path: '/finance', name: 'Keuangan', icon: Wallet },
