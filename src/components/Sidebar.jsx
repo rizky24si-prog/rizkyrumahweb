@@ -9,17 +9,27 @@ import {
   Package, 
   Wallet,
   Settings,
+  Gift,
+  MessageCircle,
+  Tag,
+  History,
+  BarChart3,
   X 
 } from 'lucide-react';
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const menuItems = [
+    const menuItems = [
     { path: '/dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { path: '/appointments', name: 'Janji Temu', icon: Calendar },
     { path: '/patients', name: 'Data Pasien', icon: Users },
     { path: '/dokter', name: 'Data Dokter', icon: Stethoscope },
     { path: '/examinations', name: 'Pemeriksaan', icon: FileText },
     { path: '/inventory', name: 'Stok Barang', icon: Package },
+    { path: '/loyalty', name: 'Loyalty & Reward', icon: Gift },
+    { path: '/promotions', name: 'Promosi', icon: Tag },
+    { path: '/reports', name: 'Laporan', icon: BarChart3 },
+    { path: '/surveys', name: 'Survei', icon: MessageCircle },
+    { path: '/activity-logs', name: 'Activity Logs', icon: History },
     { path: '/finance', name: 'Keuangan', icon: Wallet },
     { path: '/settings', name: 'Pengaturan', icon: Settings },
   ];

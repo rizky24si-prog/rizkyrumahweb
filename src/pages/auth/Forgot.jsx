@@ -1,19 +1,56 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import dentalAPI from '../../services/dentalAPI';
 
 const Forgot = () => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    setError('');
+
+    try {
+      // Cari user berdasarkan email (gunakan dentalAPI.getByEmail jika tersedia)
+      let user = null;
+      if (dentalAPI.users.getByEmail) {
+        user = await dentalAPI.users.getByEmail(email);
+      } else {
+        const allUsers = await dentalAPI.users.getAll();
+        user = (allUsers || []).find(u => u.email === email);
+      }
+
+      if (!user) {
+        setError('Email tidak ditemukan dalam sistem!');
+        setIsLoading(false);
+        return;
+      }
+
+      // Simpan ke communication_logs jika tersedia
+      try {
+        if (dentalAPI.communicationLogs && dentalAPI.communicationLogs.logOutgoing) {
+          await dentalAPI.communicationLogs.logOutgoing(
+            user.id,
+            'email',
+            `Link reset password untuk ${user.full_name}: https://dentalplus.com/reset-password?email=${encodeURIComponent(email)}`,
+            1
+          );
+        }
+      } catch (e) {
+        // ignore logging errors
+      }
+
       setIsSubmitted(true);
+    } catch (err) {
+      console.error('Forgot password error:', err);
+      setError('Terjadi kesalahan. Silakan coba lagi.');
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   if (isSubmitted) {
@@ -29,7 +66,7 @@ const Forgot = () => {
         </p>
         <Link
           to="/login"
-          className="btn-primary inline-flex items-center justify-center gap-2"
+          className="btn-primary inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition"
         >
           <ArrowLeft size={16} /> Kembali ke Login
         </Link>
@@ -44,6 +81,12 @@ const Forgot = () => {
         <p className="text-gray-500 mt-2 text-sm">Masukkan email untuk memulihkan akses</p>
       </div>
 
+      {error && (
+        <div className="mb-4 p-3 bg-red-50 text-red-600 text-xs rounded-xl border border-red-100 flex items-center">
+          <AlertCircle size={14} className="mr-2" /> {error}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-6 items-center">
         <div>
           <label className="block text-sm font-bold text-gray-800 mb-2 ml-1">Alamat Email</label>
@@ -51,19 +94,23 @@ const Forgot = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="input-field"
+            className="input-field w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
             placeholder="nama@email.com"
             required
           />
         </div>
 
-        <button type="submit" disabled={isLoading} className="btn-primary items-center justify-center font-semibold w-full">
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="btn-primary w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           {isLoading ? 'Mengirim...' : 'Kirim Link Reset'}
         </button>
 
         <div className="text-center">
-          <Link to="/" className="text-xs text-gray-500 hover:text-blue-600 font-bold transition-colors">
-            Masuk di sini
+          <Link to="/login" className="text-xs text-gray-500 hover:text-blue-600 font-bold transition-colors">
+            Kembali ke Halaman Login
           </Link>
         </div>
       </form>

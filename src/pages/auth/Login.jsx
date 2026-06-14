@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
-import axios from 'axios';
+import { Eye, EyeOff } from 'lucide-react';
+import dentalAPI from '../../services/dentalAPI';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,29 +34,37 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("https://dummyjson.com/auth/login", {
-        username: dataForm.username,
-        password: dataForm.password,
-      });
+      // Gunakan dentalAPI untuk cari user
+      const user = await dentalAPI.users.getByUsername(dataForm.username);
 
-      if (response.status === 200) {
-        // Simpan token ke localStorage
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(response.data));
-        
-        navigate("/dashboard");
+      if (!user) {
+        setError("Username atau password salah!");
+        setLoading(false);
+        return;
       }
+
+      // Verifikasi password (demo uses password_hash)
+      if (user.password_hash !== dataForm.password) {
+        setError("Username atau password salah!");
+        setLoading(false);
+        return;
+      }
+
+      // Simpan data user ke localStorage
+      localStorage.setItem("token", `fake-jwt-token-${user.id}`);
+      localStorage.setItem("user", JSON.stringify({
+        id: user.id,
+        username: user.username,
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role
+      }));
+      
+      navigate("/dashboard");
+      
     } catch (err) {
-      if (err.response) {
-        // Error dari server (status 4xx atau 5xx)
-        setError(err.response.data.message || "Username atau password salah!");
-      } else if (err.request) {
-        // Error jaringan
-        setError("Tidak dapat terhubung ke server. Periksa koneksi internet Anda.");
-      } else {
-        // Error lainnya
-        setError("Terjadi kesalahan. Silakan coba lagi.");
-      }
+      console.error("Login error:", err);
+      setError("Terjadi kesalahan. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
