@@ -86,7 +86,7 @@ const LandingPage = () => {
                 </button>
               ))}
               <Link to="/login" className="px-5 py-2 bg-primary text-white rounded-full font-semibold hover:bg-primary/90 transition shadow-md">
-                Booking Online
+                Booking-Online
               </Link>
             </div>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 rounded-lg bg-white/20">
