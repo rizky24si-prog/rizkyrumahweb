@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Menu, X, Phone, Mail, MapPin, Clock, ChevronRight, Star, Calendar, Users, 
-  Award, Shield, Tooth, Stethoscope, Smile, Heart,
+  Award, Shield, Stethoscope, Smile, Heart,
   CheckCircle, ArrowRight, Play, Quote, MessageCircle,
   CalendarDays, Sparkles, TrendingUp, Gift, Coffee, Baby,
   Activity, Droplets, Syringe, Microscope, Brain
@@ -20,7 +20,7 @@ const LandingPage = () => {
   }, []);
 
   const services = [
-    { icon: Tooth, title: 'Scaling & Polishing', desc: 'Membersihkan karang gigi dan plak untuk kesehatan gigi optimal', price: 'Rp 200.000', color: 'from-blue-500 to-cyan-500' },
+    { icon: Smile, title: 'Scaling & Polishing', desc: 'Membersihkan karang gigi dan plak untuk kesehatan gigi optimal', price: 'Rp 200.000', color: 'from-blue-500 to-cyan-500' },
     { icon: Smile, title: 'Perawatan Behel', desc: 'Merapikan gigi dengan teknologi behel terkini', price: 'Rp 4.500.000', color: 'from-green-500 to-teal-500' },
     { icon: Activity, title: 'Tambal Gigi', desc: 'Menambal gigi berlubang dengan bahan berkualitas', price: 'Rp 250.000', color: 'from-purple-500 to-pink-500' },
     { icon: Syringe, title: 'Cabut Gigi', desc: 'Pencabutan gigi dengan metode tanpa rasa sakit', price: 'Rp 150.000', color: 'from-red-500 to-orange-500' },
@@ -74,8 +74,8 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
-                <Tooth className="text-white" size={22} />
+                <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                <Smile className="text-white" size={22} />
               </div>
               <span className={`text-xl font-bold ${scrolled ? 'text-gray-900' : 'text-white'}`}>Dental <span className="text-primary">Plus</span></span>
             </div>
@@ -220,7 +220,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center"><Tooth size={20} /></div>
+                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center"><Smile size={20} /></div>
                 <span className="text-xl font-bold">Dental Plus</span>
               </div>
               <p className="text-gray-400 text-sm">Klinik gigi digital dengan teknologi modern dan dokter spesialis berpengalaman.</p>
