@@ -4,9 +4,12 @@ import {
   ArrowLeft, User, Phone, Mail, MapPin, Calendar, AlertCircle, 
   Stethoscope, Clock, DollarSign, MessageCircle, Award, FileText,
   Image, Download, Edit, CheckCircle, XCircle, Send, PhoneCall,
-  Activity, Heart, AlertTriangle, Pill, Scissors, Tooth, Star
+  Activity, Heart, AlertTriangle, Pill, Scissors, Smile, Star
 } from 'lucide-react';
 import dentalAPI from '../services/dentalAPI';
+
+// Rest of your PatientDetail component code...
+// Ganti semua <Tooth /> menjadi <Smile />
 
 const PatientDetail = () => {
   const { id } = useParams();
